@@ -24,6 +24,9 @@ jobs:
       # Publishes Blazor project to the release-folder
       - name: Publish .NET Core Project
         run: dotnet publish BlazorAppTest/BlazorAppTest.csproj -c Release -o release --nologo
+
+      - name: Change base-tag in index.html from / to BlazorAppTest
+        run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorAppTest\/" \/>/g' release/wwwroot/index.html
       
       # Copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
