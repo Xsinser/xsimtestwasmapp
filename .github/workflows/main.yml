@@ -24,10 +24,14 @@ jobs:
       # Publishes Blazor project to the release-folder
       - name: Publish .NET Core Project
         run: dotnet publish BlazorAppTest/BlazorAppTest.csproj -c Release -o release --nologo
-  
+      
+      # Copy index.html to 404.html to serve the same file when a file is not found
+      - name: copy index.html to 404.html
+        run: cp release/wwwroot/index.html release/wwwroot/404.html
+        
       # Add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
-      #- name: Add .nojekyll file
-       # run: touch release/wwwroot/.nojekyll
+      - name: Add .nojekyll file
+        run: touch release/wwwroot/.nojekyll
 
       # Deploy to GitHub pages
       - name: Deploy wwwroot to GitHub Pages
